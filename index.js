@@ -1,17 +1,19 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-// const db = require("./db/index.js");
+const db = require("./db/index.js");
+const studentsRouter = require("./routes/studentsRoute");
+const usersRouter = require("./routes/usersRoute");
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-// db();
+db();
 
-app.use(cors({ origin: "*" }));
+app.use(cors());
 app.use(express.json());
 
-app.use("*", (req, res) => res.sendStatus(404));
+app.use("/", studentsRouter, usersRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
